@@ -14,14 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/projects')]
 class ProjectsController extends AbstractController
 {
-    #[Route('/', name: 'projects_index', methods: ['GET'])]
-    public function index(ProjectsRepository $projectsRepository): Response
-    {
-        return $this->render('projects/index.html.twig', [
-            'projects' => $projectsRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'projects_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -33,20 +25,12 @@ class ProjectsController extends AbstractController
             $entityManager->persist($project);
             $entityManager->flush();
 
-            return $this->redirectToRoute('projects_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('projects/new.html.twig', [
             'project' => $project,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'projects_show', methods: ['GET'])]
-    public function show(Projects $project): Response
-    {
-        return $this->render('projects/show.html.twig', [
-            'project' => $project,
         ]);
     }
 
@@ -59,7 +43,7 @@ class ProjectsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('projects_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('projects/edit.html.twig', [
@@ -76,6 +60,6 @@ class ProjectsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('projects_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }

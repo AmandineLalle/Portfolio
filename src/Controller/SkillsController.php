@@ -14,14 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/skills')]
 class SkillsController extends AbstractController
 {
-    #[Route('/', name: 'skills_index', methods: ['GET'])]
-    public function index(SkillsRepository $skillsRepository): Response
-    {
-        return $this->render('skills/index.html.twig', [
-            'skills' => $skillsRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'skills_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -33,20 +25,12 @@ class SkillsController extends AbstractController
             $entityManager->persist($skill);
             $entityManager->flush();
 
-            return $this->redirectToRoute('skills_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('skills/new.html.twig', [
             'skill' => $skill,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'skills_show', methods: ['GET'])]
-    public function show(Skills $skill): Response
-    {
-        return $this->render('skills/show.html.twig', [
-            'skill' => $skill,
         ]);
     }
 
@@ -59,7 +43,7 @@ class SkillsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('skills_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('skills/edit.html.twig', [
@@ -76,6 +60,6 @@ class SkillsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('skills_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }

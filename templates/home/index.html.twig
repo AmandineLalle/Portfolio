@@ -1,23 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Hello you, welcome here !{% endblock %}
 
 {% block body %}
 
 <section class="section1">
-        <p>Section 1</p>
+        <h2>This is real, this is me !</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium ipsum sit amet dui porta, eu lobortis ipsum iaculis. Nam rhoncus maximus turpis quis pulvinar. Praesent eu euismod turpis. Morbi gravida tristique arcu et rutrum. Donec est massa, iaculis quis rutrum quis, sollicitudin eget purus. Praesent interdum aliquam eleifend. Nulla non convallis ex. Maecenas consectetur, massa eu efficitur facilisis, ipsum enim malesuada velit, eu auctor nibh erat nec nulla. Vivamus maximus dui eu mauris tempor malesuada. In finibus eu lectus cursus mollis. Integer commodo pellentesque eros, sit amet fermentum elit eleifend non. Vivamus vestibulum venenatis nisi eget cursus.</p>
     </section>
 
     <section class="section2">
-        <p>Section 2</p>
+        <h2>I've got skills, they're multiplying !</h2>
+
+        {% for skill in skills %}
+            <p>{{skill.techno}}</p>
+            <p>{{skill.level}}%</p>
+            <img src='{{skill.image}}'</img>
+            {% if app.user %}
+                <a href="{{ path("skills_edit", {id: skill.id}) }}">edit</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if app.user %}
+                <a href="{{ path("skills_new") }}">Create</a>
+        {% endif %}
     </section>
 
     <section class="section3">
-    <p>Section 3</p>
+    <h2>What I've done !</h2>
+
+     {% for project in projects %}
+            <p>{{project.title}}</p>
+            <p>{{project.description}}</p>
+            <p>{{project.date}}</p>
+            <p>{{project.link}}</p>
+            <img src='{{project.title}}'</img>
+            {% if app.user %}
+                <a href="{{ path("projects_edit", {id: project.id}) }}">edit</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if app.user %}
+                <a href="{{ path("projects_new") }}">Create</a>
+        {% endif %}
+
     </section>
 
     <section class="section4">
-    <p>Section 4</p>
+    <h2>Call me, call me any, anytime !</h2>
     </section>
 
 {% endblock %}
