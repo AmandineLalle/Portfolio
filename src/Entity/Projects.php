@@ -22,7 +22,7 @@ class Projects
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'text')]
     private $link;
 
     #[ORM\Column(type: 'text')]
